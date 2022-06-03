@@ -134,9 +134,10 @@
             ':washhands:':  'https://yt3.ggpht.com/66Fn-0wiOmLDkoKk4FSa9vD0yymtWEulbbQK2x-kTBswQ2auer_2ftvmrJGyMMoqEGNjJtipBA',
             ':socialdist:': 'https://yt3.ggpht.com/0WD780vTqUcS0pFq423D8WRuA_T8NKdTbRztChITI9jgOqOxD2r6dthbu86P6fIggDR6omAPfnQ',
             ':shelterin:':  'https://yt3.ggpht.com/KgaktgJ3tmEFB-gMtjUcuHd6UKq50b-S3PbHEOSUbJG7UddPoJSmrIzysXA77jJp5oRNLWG84Q',
-            'Geiel': 'https://cdn.betterttv.net/emote/5ef76e9079645a0dec3562ca/3x',
-            'SeemsGood': 'https://static-cdn.jtvnw.net/emoticons/v2/64138/default/dark/1.0',
-            'LUL': 'https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/2.0',
+            'Geiel':        'https://cdn.betterttv.net/emote/5ef76e9079645a0dec3562ca/3x',
+            'geiel':        'https://cdn.betterttv.net/emote/5ef76e9079645a0dec3562ca/3x',
+            'SeemsGood':    'https://static-cdn.jtvnw.net/emoticons/v2/64138/default/dark/1.0',
+            'LUL':          'https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/2.0',
         }
 
         function htmlentities(str) {
@@ -216,11 +217,8 @@
                 'timestamp': is_true(url.searchParams.get("timestamp"), false),
             }
         }
-
         const config = parseURL();
-
         console.log(['Loaded config', config]);
-
         let socket, pronouns_users = {},
             pronouns;
 
@@ -310,7 +308,6 @@
             
             let message_style = '';
             if (isOwner) {
-                //background_color = "#ffd600";
                 text_color = "#ff4d4d";
             }
             if (isModerator) {
@@ -348,11 +345,6 @@
                 'style': `color: ${text_color}; background-color: ${background_color}`
             }, author);
             // yt does not provide emotes in an array
-            // for (const emote in emotes) {
-            //     let el_emote = document.createElement('img');
-            //     el_emote.src = emotes[emote].imageUrl;
-            //     message = message.replace(emotes[emote].name, el_emote.outerHTML);
-            // }
             Object.entries(yt_emotes).forEach(([key, value]) => {
                 let el_emote = document.createElement('img');
                 el_emote.src = value;
@@ -395,22 +387,17 @@
                 if (wsdata.id === 'obs-chat') {
                     console.log(`SUBSCRIBE: ${wsdata.status}`);
                 } else if (wsdata.event.source === 'YouTube' && wsdata.event.type === 'Message') {
-                    //let m = wsdata.data.message;
                     let m = wsdata.data;
-
-                    // pronouns rely on twitch connected account names, if it is the same as in YT, pronouns will match.
+                    // pronouns rely on twitch connected account names, if it is the same as in YT, pronouns will match. if not, not.
                     await fetch_pronoun(m.user.name); 
                     pronoun = get_pronoun(m.user.name);
 
-                    //add_message(m.displayName, m.color, m.message, pronoun, m.emotes, m.role, m.subscriber, m.isHighlighted);
-                    // use m.user.name, profileImageUrl, isOwner, isModerator, isSponsor, isVerified
                     add_message(m.user.name, '#bebebe', m.message, pronoun, m.user.profileImageUrl, m.user.isOwner, m.user.isModerator, m.user.isSponsor, m.user.isVerified);
                 } else {
                     console.log(['Event not implemented', event]);
                 }
 
             };
-
             socket.onopen = () => {
                 socket.send(JSON.stringify({
                     "request": "Subscribe",
@@ -440,7 +427,6 @@
                 setTimeout(connectws, 10000);
             };
         }
-
         connectws();
     </script>
 </body>
