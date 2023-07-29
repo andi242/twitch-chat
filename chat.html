@@ -326,7 +326,7 @@
             socket.onmessage = async (event) => {
                 const wsdata = JSON.parse(event.data);
 
-                //console.log(['Event', wsdata]);
+                console.log(['Event', wsdata]);
 
                 if (wsdata.id === 'obs-chat') {
                     console.log(`SUBSCRIBE: ${wsdata.status}`);
