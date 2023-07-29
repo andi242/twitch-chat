@@ -39,6 +39,8 @@ full default, badges, pronouns, vertical chat
 
 - dynamic chat badges from message
 - pronouns font size config, defaults to fontsize
+- add experimental support for redemptions
+- small css formattings
 
 ## I've read this README but I still have questions/problems, where can I get help?
 

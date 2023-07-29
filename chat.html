@@ -10,7 +10,7 @@
         html,
         #chat {
             background: transparent;
-            padding: 0;
+            padding: 10px 0px 0px 0px;
             margin: 0;
             height: 100%;
             width: 100%;
@@ -46,7 +46,8 @@
         }
         .chat-message {
             height: auto;
-            padding: 0rem 0.2rem;
+            padding: 0.5rem 0.2rem 0rem 0rem;
+            text-shadow: 1px 1px black;
         }
         .msg-badges {
             padding: 0rem 0.2rem;
@@ -77,6 +78,7 @@
         }
         .chat-message {
             float: left;
+            padding: 0rem 0.2rem;
         }
         .msg-user {
             padding-left: 0rem;
@@ -239,7 +241,7 @@
 
             // TODO handle cheermotes
             let badges = [];
-            if (config['badges'] === true) {
+            if (config['badges'] === true &&  chatbadges.length !== 0) {
                 for (let badge of chatbadges) {
                     badges.push(badge.imageUrl);
                 }
@@ -337,6 +339,10 @@
                     pronoun = get_pronoun(m.username);
 
                     add_message(m.displayName, m.color, m.message, pronoun, m.emotes, m.role, m.subscriber, m.isHighlighted, m.badges);
+                } else if (wsdata.event.source === 'Twitch' && wsdata.event.type === 'RewardRedemption') {
+                    let redeemed = wsdata.data;
+                    //add_message(m.displayName, m.color, m.message, pronoun, m.emotes, m.role, m.subscriber, m.isHighlighted, m.badges);
+                    add_message(redeemed.user_name, "", "redeemed " + redeemed.reward.title + ": " + redeemed.user_input, "", "", "", "", "", "");
                 } else {
                     console.log(['Event not implemented', event]);
                 }
@@ -349,7 +355,8 @@
                     "id": "obs-chat",
                     "events": {
                         "Twitch": [
-                            "ChatMessage"
+                            "ChatMessage",
+                            "RewardRedemption"
                         ]
                     }
                 }));
