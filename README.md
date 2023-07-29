@@ -37,7 +37,7 @@ full default, badges, pronouns, vertical chat
 
 ### latest changes
 
-- chat badges from events
+- dynamic chat badges from message
 - pronouns font size config, defaults to fontsize
 
 ## I've read this README but I still have questions/problems, where can I get help?
